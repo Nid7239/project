@@ -1,31 +1,16 @@
- Page Table
-Sequence:[13, 17, 4, 11, 12, 7, 18, 8, 6, 19, 15, 14, 17, 7, 15, 1, 19, 16, 19, 18, 4, 7, 18, 19, 11]
-
-Page 13 | FAULT | File /var/data/page_13.data | Frames [13, None, None, None, None, None, None, None]
-Page 17 | FAULT | File /var/data/page_17.data | Frames [13, 17, None, None, None, None, None, None]
-Page 4 | FAULT | File /var/data/page_4.data | Frames [13, 17, 4, None, None, None, None, None]
-Page 11 | FAULT | File /var/data/page_11.data | Frames [13, 17, 4, 11, None, None, None, None]
-Page 12 | FAULT | File /var/data/page_12.data | Frames [13, 17, 4, 11, 12, None, None, None]
-Page 7 | FAULT | File /var/data/page_7.data | Frames [13, 17, 4, 11, 12, 7, None, None]
-Page 18 | FAULT | File /var/data/page_18.data | Frames [13, 17, 4, 11, 12, 7, 18, None]
-Page 8 | FAULT | File /var/data/page_8.data | Frames [13, 17, 4, 11, 12, 7, 18, 8]
-Page 6 | FAULT | File /var/data/page_6.data | Frames [6, 17, 4, 11, 12, 7, 18, 8]
-Page 19 | FAULT | File /var/data/page_19.data | Frames [6, 19, 4, 11, 12, 7, 18, 8]
-Page 15 | FAULT | File /var/data/page_15.data | Frames [6, 19, 15, 11, 12, 7, 18, 8]
-Page 14 | FAULT | File /var/data/page_14.data | Frames [6, 19, 15, 14, 12, 7, 18, 8]
-Page 17 | FAULT | File /var/data/page_17.data | Frames [6, 19, 15, 14, 17, 7, 18, 8]
-Page 7 | HIT | File /var/data/page_7.data | Frames [6, 19, 15, 14, 17, 7, 18, 8]
-Page 15 | HIT | File /var/data/page_15.data | Frames [6, 19, 15, 14, 17, 7, 18, 8]
-Page 1 | FAULT | File /var/data/page_1.data | Frames [6, 19, 15, 14, 17, 7, 1, 8]
-Page 19 | HIT | File /var/data/page_19.data | Frames [6, 19, 15, 14, 17, 7, 1, 8]
-Page 16 | FAULT | File /var/data/page_16.data | Frames [6, 19, 15, 14, 17, 7, 1, 16]
-Page 19 | HIT | File /var/data/page_19.data | Frames [6, 19, 15, 14, 17, 7, 1, 16]
-Page 18 | FAULT | File /var/data/page_18.data | Frames [18, 19, 15, 14, 17, 7, 1, 16]
-Page 4 | FAULT | File /var/data/page_4.data | Frames [18, 19, 15, 4, 17, 7, 1, 16]
-Page 7 | HIT | File /var/data/page_7.data | Frames [18, 19, 15, 4, 17, 7, 1, 16]
-Page 18 | HIT | File /var/data/page_18.data | Frames [18, 19, 15, 4, 17, 7, 1, 16]
-Page 19 | HIT | File /var/data/page_19.data | Frames [18, 19, 15, 4, 17, 7, 1, 16]
-Page 11 | FAULT | File /var/data/page_11.data | Frames [18, 19, 15, 4, 11, 7, 1, 16]
-
-Total Hits: 7
-Total Faults: 18
+LRU PAGE TABLE SIMULATION
+Sequence | [3, 3, 4, 3, 4, 3, 2, 5, 3, 5]
+Time | 16:36:35 | Page | 3 | Status | FAULT | Frames | [3, '-', '-']
+Time | 16:36:35 | Page | 3 | Status | HIT | Frames | [3, '-', '-']
+Time | 16:36:35 | Page | 4 | Status | FAULT | Frames | [3, 4, '-']
+Time | 16:36:35 | Page | 3 | Status | HIT | Frames | [3, 4, '-']
+Time | 16:36:35 | Page | 4 | Status | HIT | Frames | [3, 4, '-']
+Time | 16:36:35 | Page | 3 | Status | HIT | Frames | [3, 4, '-']
+Time | 16:36:35 | Page | 2 | Status | FAULT | Frames | [3, 4, 2]
+Time | 16:36:35 | Page | 5 | Status | FAULT | Frames | [5, 4, 2]
+Time | 16:36:35 | Page | 3 | Status | FAULT | Frames | [3, 4, 2]
+Time | 16:36:35 | Page | 5 | Status | FAULT | Frames | [5, 4, 2]
+======================================================================
+Total Hits | 4
+Total Faults | 6
+======================================================================

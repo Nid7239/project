@@ -1,30 +1,46 @@
 import random
-from page_table import PageTable
-from constants import TOTAL_REQUESTS,PAGE_RANGE,OUTPUT_FILE
+import time
+from mmu import MMU
+from constants import TOTAL_REQUESTS, PAGE_RANGE, NUM_FRAMES, OUTPUT_FILE
+
 
 def generate_sequence():
-    return [random.randint(1,PAGE_RANGE) for _ in range(TOTAL_REQUESTS)]
+    return [random.randint(1, PAGE_RANGE) for _ in range(TOTAL_REQUESTS)]
+
 
 def run():
-    pt=PageTable()
+    mmu =MMU(NUM_FRAMES)
     sequence=generate_sequence()
     hits=0
-    faults = 0
+    faults=0
+    header= "LRU PAGE TABLE SIMULATION"
+    separator= "=" * 70
+    print("\n" + header)
+    print(separator)
+    print(f"Sequence | {sequence}")
 
-    with open(OUTPUT_FILE, "w") as f:
-        f.write(" Page Table\n")
-        f.write(f"Sequence:{sequence}\n\n")
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(header + "\n")
+        f.write(f"Sequence | {sequence}\n")
+
         for page in sequence:
-            file,status=pt.access_page(page)
+            frame, status=mmu.access_page(page)
             if status == "HIT":
-                hits+= 1
+                hits +=1
             else:
-                faults+= 1
-            # displat pages in memeory
-            frame_view=[entry[0] for entry in pt.frames]
-            f.write(f"Page {page} | {status} | File {file} | Frames {frame_view}\n")
-        f.write("\n")
-        f.write(f"Total Hits: {hits}\n")
-        f.write(f"Total Faults: {faults}\n")
-if __name__ == "__main__":
+                faults +=1
+
+            frame_view=[fr.page if fr.page is not None else "-" for fr in mmu.frames]
+            timestamp = time.strftime("%H:%M:%S", time.localtime())
+            line = f"Time | {timestamp} | Page | {page} | Status | {status} | Frames | {frame_view}"
+            print(line)
+            f.write(line + "\n")
+        print(separator)
+        print(f"Total hits | {hits}")
+        print(f"Total faults | {faults}")
+
+        f.write(separator + "\n")
+        f.write(f"Total hits | {hits}\n")
+        f.write(f"Total faults | {faults}\n")
+if __name__=="__main__":
     run()
