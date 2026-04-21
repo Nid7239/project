@@ -1,177 +1,173 @@
-===== PAGE TABLE SIMULATION =====
+   PAGE TABLE SIMULATION         
 Sequence:
-['file1', 'file2', 'file1', 'file3', 'file3', 'file2', 'file2', 'file2', 'file1', 'file1', 'file3', 'file1']
+['file2', 'file1', 'file3', 'file3', 'file2', 'file3', 'file1', 'file1', 'file1', 'file1', 'file1', 'file3']
 
-Access: file1 (file1_p2) ---- FAULT
+Access: file2 (file2_p1) ---- FAULT
 Page Table:
-file1_p2 -> Frame 0 | Valid: 1
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
 Frames:
-Frame0: file1_p2
+Frame0: file2_p1
 Frame1: None
 Frame2: None
 Frame3: None
 Frame4: None
 Frame5: None
 
-Access: file2 (file2_p1) ---- FAULT
+Access: file1 (file1_p1) ---- FAULT
 Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
 Frames:
-Frame0: file1_p2
-Frame1: file2_p1
+Frame0: file2_p1
+Frame1: file1_p1
 Frame2: None
-Frame3: None
-Frame4: None
-Frame5: None
-
-Access: file1 (file1_p0) ---- FAULT
-Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
 Frame3: None
 Frame4: None
 Frame5: None
 
 Access: file3 (file3_p0) ---- FAULT
 Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
 Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: None
 Frame4: None
 Frame5: None
 
 Access: file3 (file3_p0) ---- HIT
 Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
 Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
-Frame4: None
-Frame5: None
-
-Access: file2 (file2_p1) ---- HIT
-Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
-Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: None
 Frame4: None
 Frame5: None
 
 Access: file2 (file2_p0) ---- FAULT
 Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
-file2_p0 -> Frame 4 | Valid: 1
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
+file2_p0 -> Frame 3 | Valid: 1 | Time: 16:52:12
 Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
-Frame4: file2_p0
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: file2_p0
+Frame4: None
 Frame5: None
-
-Access: file2 (file2_p0) ---- HIT
-Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
-file2_p0 -> Frame 4 | Valid: 1
-Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
-Frame4: file2_p0
-Frame5: None
-
-Access: file1 (file1_p1) ---- FAULT
-Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
-file2_p0 -> Frame 4 | Valid: 1
-file1_p1 -> Frame 5 | Valid: 1
-Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
-Frame4: file2_p0
-Frame5: file1_p1
-
-Access: file1 (file1_p1) ---- HIT
-Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
-file2_p0 -> Frame 4 | Valid: 1
-file1_p1 -> Frame 5 | Valid: 1
-Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
-Frame4: file2_p0
-Frame5: file1_p1
 
 Access: file3 (file3_p0) ---- HIT
 Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
-file2_p0 -> Frame 4 | Valid: 1
-file1_p1 -> Frame 5 | Valid: 1
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
+file2_p0 -> Frame 3 | Valid: 1 | Time: 16:52:12
 Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
-Frame4: file2_p0
-Frame5: file1_p1
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: file2_p0
+Frame4: None
+Frame5: None
 
-Access: file1 (file1_p0) ---- HIT
+Access: file1 (file1_p1) ---- HIT
 Page Table:
-file1_p2 -> Frame 0 | Valid: 1
-file2_p1 -> Frame 1 | Valid: 1
-file1_p0 -> Frame 2 | Valid: 1
-file3_p0 -> Frame 3 | Valid: 1
-file2_p0 -> Frame 4 | Valid: 1
-file1_p1 -> Frame 5 | Valid: 1
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
+file2_p0 -> Frame 3 | Valid: 1 | Time: 16:52:12
 Frames:
-Frame0: file1_p2
-Frame1: file2_p1
-Frame2: file1_p0
-Frame3: file3_p0
-Frame4: file2_p0
-Frame5: file1_p1
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: file2_p0
+Frame4: None
+Frame5: None
 
-===== END =====
+Access: file1 (file1_p0) ---- FAULT
+Page Table:
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
+file2_p0 -> Frame 3 | Valid: 1 | Time: 16:52:12
+file1_p0 -> Frame 4 | Valid: 1 | Time: 16:52:12
+Frames:
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: file2_p0
+Frame4: file1_p0
+Frame5: None
+
+Access: file1 (file1_p2) ---- FAULT
+Page Table:
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
+file2_p0 -> Frame 3 | Valid: 1 | Time: 16:52:12
+file1_p0 -> Frame 4 | Valid: 1 | Time: 16:52:12
+file1_p2 -> Frame 5 | Valid: 1 | Time: 16:52:12
+Frames:
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: file2_p0
+Frame4: file1_p0
+Frame5: file1_p2
+
+Access: file1 (file1_p2) ---- HIT
+Page Table:
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
+file2_p0 -> Frame 3 | Valid: 1 | Time: 16:52:12
+file1_p0 -> Frame 4 | Valid: 1 | Time: 16:52:12
+file1_p2 -> Frame 5 | Valid: 1 | Time: 16:52:12
+Frames:
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: file2_p0
+Frame4: file1_p0
+Frame5: file1_p2
+
+Access: file1 (file1_p1) ---- HIT
+Page Table:
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
+file2_p0 -> Frame 3 | Valid: 1 | Time: 16:52:12
+file1_p0 -> Frame 4 | Valid: 1 | Time: 16:52:12
+file1_p2 -> Frame 5 | Valid: 1 | Time: 16:52:12
+Frames:
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: file2_p0
+Frame4: file1_p0
+Frame5: file1_p2
+
+Access: file3 (file3_p0) ---- HIT
+Page Table:
+file2_p1 -> Frame 0 | Valid: 1 | Time: 16:52:12
+file1_p1 -> Frame 1 | Valid: 1 | Time: 16:52:12
+file3_p0 -> Frame 2 | Valid: 1 | Time: 16:52:12
+file2_p0 -> Frame 3 | Valid: 1 | Time: 16:52:12
+file1_p0 -> Frame 4 | Valid: 1 | Time: 16:52:12
+file1_p2 -> Frame 5 | Valid: 1 | Time: 16:52:12
+Frames:
+Frame0: file2_p1
+Frame1: file1_p1
+Frame2: file3_p0
+Frame3: file2_p0
+Frame4: file1_p0
+Frame5: file1_p2
