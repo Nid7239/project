@@ -1,50 +1,38 @@
-import time
 from frame import Frame
 from page_table import PageTable
 
 class MMU:
-    def __init__(self,max_frames):
-        self.frames=[Frame(i) for i in range(max_frames)]
-        self.page_table=PageTable()
+    def __init__(self, num_frames):
+        self.frames = [Frame(i) for i in range(num_frames)]
+        self.page_table = PageTable()
 
-    def access_page(self,page):
-        current_time =time.time()
+    def access_page(self, page):
+        entry = self.page_table.get_entry(page)
 
-        entry =self.page_table.get_entry(page)
+        # HIT
+        if entry and entry.valid:
+            entry.access()
+            return "HIT"
 
-        if entry and entry.frame:
-            entry.reference=1
-            entry.last_used=current_time
-            entry.frame.time=current_time
-            return entry.frame,"HIT"
-
-        if not entry:
-            entry = self.page_table.create_entry(page)
-
+        # FAULT (empty frame)
         for frame in self.frames:
             if frame.page is None:
-                frame.page=page
-                frame.time=current_time
-                entry.frame=frame
-                entry.valid=1
-                entry.reference= 1
-                entry.last_used= current_time
-                return frame, "FAULT"
+                frame.page = page
+                self.page_table.map(page, frame)
+                return "FAULT"
 
-        lru_frame =min(self.frames, key=lambda f: f.time)
+        # LRU Replacement
+        lru_entry = min(
+            self.page_table.entries.values(),
+            key=lambda e: e.last_access
+        )
 
-        old_page =lru_frame.page
-        old_entry = self.page_table.get_entry(old_page)
+        old_page = lru_entry.page_number
+        frame = lru_entry.frame
 
-        if old_entry:
-            old_entry.valid =0
-            old_entry.frame =None
+        self.page_table.unmap(old_page)
 
-            #for replacing the page in the frame
-        lru_frame.page =page
-        lru_frame.time =current_time
-        entry.frame =lru_frame
-        entry.valid =1
-        entry.reference =1
-        entry.last_used =current_time
-        return lru_frame,"FAULT"
+        frame.page = page
+        self.page_table.map(page, frame)
+
+        return "FAULT"

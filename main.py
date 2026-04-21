@@ -1,46 +1,66 @@
 import random
-import time
 from mmu import MMU
-from constants import TOTAL_REQUESTS, PAGE_RANGE, NUM_FRAMES, OUTPUT_FILE
+from file import File
+from constants import NUM_FRAMES, TOTAL_REQUESTS, OUTPUT_FILE
 
 
-def generate_sequence():
-    return [random.randint(1, PAGE_RANGE) for _ in range(TOTAL_REQUESTS)]
+def generate_files():
+    return [
+        File("file1", 12),  # 3 pages
+        File("file2", 8),   # 2 pages
+        File("file3", 4),   # 1 page
+    ]
+
+
+def generate_sequence(files):
+    file_ids = [f.file_id for f in files]
+
+    # Weighted access (file1 more frequent)
+    weights = [0.5, 0.3, 0.2]
+
+    sequence = []
+
+    for _ in range(TOTAL_REQUESTS):
+        chosen_file_id = random.choices(file_ids, weights=weights, k=1)[0]
+        chosen_file = next(f for f in files if f.file_id == chosen_file_id)
+        page = random.choice(chosen_file.pages)
+
+        sequence.append((chosen_file_id, page))
+
+    return sequence
 
 
 def run():
-    mmu =MMU(NUM_FRAMES)
-    sequence=generate_sequence()
-    hits=0
-    faults=0
-    header= "LRU PAGE TABLE SIMULATION"
-    separator= "=" * 70
-    print("\n" + header)
-    print(separator)
-    print(f"Sequence | {sequence}")
+    mmu = MMU(NUM_FRAMES)
+    files = generate_files()
+    sequence = generate_sequence(files)
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(header + "\n")
-        f.write(f"Sequence | {sequence}\n")
+    with open(OUTPUT_FILE, "w") as f:
 
-        for page in sequence:
-            frame, status=mmu.access_page(page)
-            if status == "HIT":
-                hits +=1
-            else:
-                faults +=1
-
-            frame_view=[fr.page if fr.page is not None else "-" for fr in mmu.frames]
-            timestamp = time.strftime("%H:%M:%S", time.localtime())
-            line = f"Time | {timestamp} | Page | {page} | Status | {status} | Frames | {frame_view}"
+        def write(line):
             print(line)
             f.write(line + "\n")
-        print(separator)
-        print(f"Total hits | {hits}")
-        print(f"Total faults | {faults}")
 
-        f.write(separator + "\n")
-        f.write(f"Total hits | {hits}\n")
-        f.write(f"Total faults | {faults}\n")
-if __name__=="__main__":
+        write("===== PAGE TABLE SIMULATION =====")
+        write("Sequence:")
+        write(str([file_id for file_id, _ in sequence]))
+
+        for file_id, page in sequence:
+            status = mmu.access_page(page)
+
+            write(f"\nAccess: {file_id} ({page}) ---- {status}")
+
+            write("Page Table:")
+            for p, entry in mmu.page_table.entries.items():
+                frame_id = entry.frame.frame_id if entry.frame else "-"
+                write(f"{p} -> Frame {frame_id} | Valid: {entry.valid}")
+
+            write("Frames:")
+            for fr in mmu.frames:
+                write(str(fr))
+
+        write("\n===== END =====")
+
+
+if __name__ == "__main__":
     run()
