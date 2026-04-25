@@ -1,6 +1,6 @@
 class Frame:
-    def __init__(self,frame_id):
-        self.frame_id=frame_id
-        self.page=None
-    def __repr__(self):
-        return f"Frame{self.frame_id}: {self.page}"
+    def __init__(self,idx):
+        self.idx=idx
+        self.page = None
+    def __str__(self):
+        return f"Frame{self.idx}: {self.page}"
