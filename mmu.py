@@ -27,29 +27,19 @@ class LRU:
     def remove(self, node):
         if not node:
             return
-
         if node.prev:
             node.prev.next = node.next
         else:
             self.head = node.next
-
         if node.next:
             node.next.prev = node.prev
         else:
             self.tail = node.prev
 
-        node.prev = node.next = None
-
     def move_to_end(self, node):
         self.remove(node)
         self.add(node)
 
-    def pop(self):
-        if not self.head:
-            return None
-        node = self.head
-        self.remove(node)
-        return node
 
 class MMU:
     def __init__(self, n):
@@ -64,26 +54,22 @@ class MMU:
                 return f
         return None
 
-    def _smart_victim(self):
+    def _victim(self):
         candidates = []
         curr = self.lru.head
 
         while curr:
-            entry = self.table.get(curr.page)
-            if entry and entry.valid:
-                candidates.append((entry.reference, entry.last_access, curr))
+            e = self.table.get(curr.page)
+            if e and e.valid:
+                candidates.append((e.reference, e.last_access, curr))
             curr = curr.next
-
-        if not candidates:
-            return None
 
         candidates.sort(key=lambda x: (x[0], x[1]))
         victim = candidates[0][2]
-
         self.lru.remove(victim)
         return victim
 
-    def cleanup(self):
+    def _cleanup(self):
         removed = []
 
         if len(self.table.entries) <= PAGE_TABLE_LIMIT:
@@ -94,37 +80,12 @@ class MMU:
             key=lambda x: x[1].last_access
         )
 
-# remove invalid entries
-        i = 0
-        while len(self.table.entries) > PAGE_TABLE_LIMIT and i < len(items):
-            page, entry = items[i]
-
-            if entry.valid == 0:
-                removed.append(page)
-
-                if page in self.map:
-                    self.lru.remove(self.map[page])
-                    del self.map[page]
-
-                del self.table.entries[page]
-
-            i += 1
-
-   
         while len(self.table.entries) > PAGE_TABLE_LIMIT:
-            node = self._smart_victim()
-            if not node:
-                break
-
-            page = node.page
+            page, entry = items.pop(0)
             removed.append(page)
 
-            entry = self.table.get(page)
-
-            if entry and entry.valid:
-                node.frame.page = None
-
             if page in self.map:
+                self.lru.remove(self.map[page])
                 del self.map[page]
 
             del self.table.entries[page]
@@ -136,15 +97,9 @@ class MMU:
 
         # HIT
         if e and e.valid:
-            node = self.map[page]
-            self.lru.move_to_end(node)
+            self.lru.move_to_end(self.map[page])
             e.access()
-
-            removed = []
-            if len(self.table.entries) > PAGE_TABLE_LIMIT:
-                removed = self.cleanup()
-
-            return "HIT", removed
+            return "HIT", self._cleanup()
 
         # FAULT
         free = self._free()
@@ -157,17 +112,14 @@ class MMU:
             self.lru.add(node)
             self.map[page] = node
 
-            removed = []
-            if len(self.table.entries) > PAGE_TABLE_LIMIT:
-                removed = self.cleanup()
-
-            return "FAULT", removed
+            return "FAULT", self._cleanup()
 
         # Replacement
-        victim = self._smart_victim()
+        victim = self._victim()
         old_page = victim.page
 
         self.table.unmap(old_page)
+
         victim.frame.page = page
         self.table.map(page, victim.frame)
 
@@ -178,8 +130,4 @@ class MMU:
         self.lru.add(node)
         self.map[page] = node
 
-        removed = [old_page]
-        if len(self.table.entries) > PAGE_TABLE_LIMIT:
-            removed += self.cleanup()
-
-        return "FAULT", removed
+        return "FAULT", self._cleanup()
