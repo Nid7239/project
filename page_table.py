@@ -1,30 +1,21 @@
-import time
-
 class Entry:
-    def __init__(self, frame=None):
+    def __init__(self, frame, timestamp):
         self.frame = frame
-        self.valid = 1 if frame else 0
-        self.reference = 0
-        self.last_access = time.time()
-    def access(self):
-        self.reference += 1
-        self.last_access = time.time()
+        self.valid = True
+        self.last_access = timestamp
+    def access(self, timestamp):
+        self.last_access = timestamp
 class PageTable:
     def __init__(self):
         self.entries = {}
-
     def get(self, page):
         return self.entries.get(page)
-
-    def map(self, page, frame):
-        if page not in self.entries:
-            self.entries[page] = Entry(frame)
-        else:
-            self.entries[page].frame = frame
-            self.entries[page].valid = 1
-
-        self.entries[page].access()
-
+    def map(self, page, frame, timestamp):
+        self.entries[page] = Entry(frame, timestamp)
     def unmap(self, page):
+        """Destructive unmap: Clears the frame and removes the entry entirely."""
         if page in self.entries:
-            self.entries[page].valid = 0
+            entry = self.entries[page]
+            if entry.frame:
+                entry.frame.page = None  # Reclaim the physical frame
+            del self.entries[page]       # Prevent table from growing infinitely

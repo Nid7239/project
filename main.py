@@ -1,53 +1,35 @@
-import sys
 import time
+import sys
 from mmu import MMU
 from file import File
 from constants import NUM_FRAMES
 
-
-def fmt(t):
-    us = int((t % 1) * 1000000)
-    return time.strftime("%H:%M:%S", time.localtime(t)) + f".{us:06d}"
-
-
+def format_time(dt):
+    return dt.strftime("%H:%M:%S.%f")
 def run():
-    with open("output.log", "w") as f:
-        sys.stdout = f
-
+    with open("output.log", "w") as log_file:
+        sys.stdout = log_file
         mmu = MMU(NUM_FRAMES)
-
-        files = [
-            File("file1", 8),
-            File("file2", 8),
-            File("file3", 16),
-            File("file4", 8),
-        ]
-
-        print("===== PAGE TABLE SIMULATION =====")
+        files = [File("f1", 8), File("f2", 8), File("f3", 16)]
+        print(f"{'TIMESTAMP':<18} | {'PAGE':<8} | {'STATUS':<6} | {'PHYSICAL RAM SLOTS (0-3)'}")
+        print("-" * 85)
 
         for fobj in files:
-            print(f"\n=== Accessing {fobj.file_id} ===")
-
+            print(f"--- Accessing File: {fobj.file_id} ---")
             for p in fobj.pages:
+                time.sleep(0.001) 
                 status, removed = mmu.access(p)
-
-                print(f"{p} -> {status}")
-
+                entry = mmu.table.get(p)
+                ts = format_time(entry.last_access)          
+                frame_view = " ".join([f"[{f.page if f.page else '   -   ':^9}]" for f in mmu.frames])
+                print(f"{ts:<18} | {p:<8} | {status:<6} | {frame_view}")
+                
                 if removed:
-                    print("*** CLEANUP ***")
-                    for r in removed:
-                        print(r)
+                    print(f"{' ':>18} | [CLEANUP] Table Purged: {removed}")
+            print()
 
-                print("Page Table:")
-                for k, e in mmu.table.entries.items():
-                    print(f"{k} | V={e.valid} | Ref={e.reference} | Time={fmt(e.last_access)}")
-
-                print("Frames:")
-                for fr in mmu.frames:
-                    print(fr)
-
-        print("\nDONE")
-
+    sys.stdout = sys.__stdout__
+    print("'output.log'.")
 
 if __name__ == "__main__":
     run()

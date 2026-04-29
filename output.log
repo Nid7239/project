@@ -1,136 +1,16 @@
-===== PAGE TABLE SIMULATION =====
+TIMESTAMP          | PAGE     | STATUS | PHYSICAL RAM SLOTS (0-3)
+-------------------------------------------------------------------------------------
+--- Accessing File: f1 ---
+22:55:26.390198    | f1_p0    | FAULT  | [  f1_p0  ] [    -    ] [    -    ] [    -    ]
+22:55:26.391592    | f1_p1    | FAULT  | [  f1_p0  ] [  f1_p1  ] [    -    ] [    -    ]
 
-=== Accessing file1 ===
-file1_p0 -> FAULT
-Page Table:
-file1_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-Frames:
-Frame0: file1_p0
-Frame1: None
-Frame2: None
-Frame3: None
-file1_p1 -> FAULT
-Page Table:
-file1_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-Frames:
-Frame0: file1_p0
-Frame1: file1_p1
-Frame2: None
-Frame3: None
+--- Accessing File: f2 ---
+22:55:26.393435    | f2_p0    | FAULT  | [  f1_p0  ] [  f1_p1  ] [  f2_p0  ] [    -    ]
+22:55:26.395177    | f2_p1    | FAULT  | [  f1_p0  ] [  f1_p1  ] [  f2_p0  ] [  f2_p1  ]
 
-=== Accessing file2 ===
-file2_p0 -> FAULT
-Page Table:
-file1_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file2_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-Frames:
-Frame0: file1_p0
-Frame1: file1_p1
-Frame2: file2_p0
-Frame3: None
-file2_p1 -> FAULT
-Page Table:
-file1_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file2_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file2_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-Frames:
-Frame0: file1_p0
-Frame1: file1_p1
-Frame2: file2_p0
-Frame3: file2_p1
+--- Accessing File: f3 ---
+22:55:26.396920    | f3_p0    | FAULT  | [  f3_p0  ] [  f1_p1  ] [  f2_p0  ] [  f2_p1  ]
+22:55:26.399024    | f3_p1    | FAULT  | [  f3_p0  ] [  f3_p1  ] [  f2_p0  ] [  f2_p1  ]
+22:55:26.401062    | f3_p2    | FAULT  | [  f3_p0  ] [  f3_p1  ] [  f3_p2  ] [  f2_p1  ]
+22:55:26.403099    | f3_p3    | FAULT  | [  f3_p0  ] [  f3_p1  ] [  f3_p2  ] [  f3_p3  ]
 
-=== Accessing file3 ===
-file3_p0 -> FAULT
-Page Table:
-file1_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file2_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file2_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-Frames:
-Frame0: file3_p0
-Frame1: file1_p1
-Frame2: file2_p0
-Frame3: file2_p1
-file3_p1 -> FAULT
-Page Table:
-file1_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file2_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-Frames:
-Frame0: file3_p0
-Frame1: file3_p1
-Frame2: file2_p0
-Frame3: file2_p1
-file3_p2 -> FAULT
-Page Table:
-file1_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p2 | V=1 | Ref=1 | Time=15:48:30.054714
-Frames:
-Frame0: file3_p0
-Frame1: file3_p1
-Frame2: file3_p2
-Frame3: file2_p1
-file3_p3 -> FAULT
-Page Table:
-file1_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file3_p0 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p2 | V=1 | Ref=1 | Time=15:48:30.054714
-file3_p3 | V=1 | Ref=1 | Time=15:48:30.054714
-Frames:
-Frame0: file3_p0
-Frame1: file3_p1
-Frame2: file3_p2
-Frame3: file3_p3
-
-=== Accessing file4 ===
-file4_p0 -> FAULT
-Page Table:
-file1_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file3_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file3_p1 | V=1 | Ref=1 | Time=15:48:30.053717
-file3_p2 | V=1 | Ref=1 | Time=15:48:30.054714
-file3_p3 | V=1 | Ref=1 | Time=15:48:30.054714
-file4_p0 | V=1 | Ref=1 | Time=15:48:30.054714
-Frames:
-Frame0: file4_p0
-Frame1: file3_p1
-Frame2: file3_p2
-Frame3: file3_p3
-file4_p1 -> FAULT
-Page Table:
-file1_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file1_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file2_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file3_p0 | V=0 | Ref=1 | Time=15:48:30.053717
-file3_p1 | V=0 | Ref=1 | Time=15:48:30.053717
-file3_p2 | V=1 | Ref=1 | Time=15:48:30.054714
-file3_p3 | V=1 | Ref=1 | Time=15:48:30.054714
-file4_p0 | V=1 | Ref=1 | Time=15:48:30.054714
-file4_p1 | V=1 | Ref=1 | Time=15:48:30.054714
-Frames:
-Frame0: file4_p0
-Frame1: file4_p1
-Frame2: file3_p2
-Frame3: file3_p3
-
-DONE
